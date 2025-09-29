@@ -22,7 +22,7 @@ const GameImages = [
   },
   {
     name: "pong",
-    img: "https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/png.png",
+    img: "https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/pong.png",
     // img: `${import.meta.env.BASE_URL}/pong.png`,
     url: "https://editor.p5js.org/Adsa2/full/WRYvYDXT-",
   },
