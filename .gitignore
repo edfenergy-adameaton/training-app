@@ -22,3 +22,48 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+node_modules/
+dist/
+
+# Terraform files - SECURITY CRITICAL
+**/*.tfstate
+**/*.tfstate.*
+**/.terraform/
+**/.terraform.lock.hcl
+**/terraform.tfvars
+**/terraform.tfvars.json
+**/*.auto.tfvars
+**/*.auto.tfvars.json
+**/override.tf
+**/override.tf.json
+**/*_override.tf
+**/*_override.tf.json
+**/.terraformrc
+**/terraform.rc
+**/crash.log
+**/crash.*.log
+
+# AWS credentials and config
+.aws/
+**/credentials
+**/config
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+**/.env*
+
+# SSH keys
+**/*.pem
+**/*.key
+**/id_rsa*
+**/id_ed25519*
+
+# Other sensitive files
+**/secrets.json
+**/config.json
+**/*secret*
+**/*password*
