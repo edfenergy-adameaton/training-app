@@ -42,7 +42,10 @@ function Home() {
     <div className="home-container">
       <header className="home-header">
         <h1>Home</h1>
-        <img className="header-image" src="/EDF_Energy_logo.svg.png" />
+        <img
+          className="header-image"
+          src={`${import.meta.env.BASE_URL}//EDF_Energy_logo.svg.png`}
+        />
       </header>
       <h2>Games</h2>
       <div className="image-container">
