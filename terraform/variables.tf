@@ -4,6 +4,10 @@ variable "bucket_name" {
   default     = "adam-app-bucket2909"
 }
 
+variable "files_to_upload" {
+  type = map(string)
+}
+
 variable "read_principal_arn" {
   description = "ARN of the IAM user or role that can read from the bucket"
   type        = string
