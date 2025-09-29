@@ -4,22 +4,26 @@ import { Link } from "react-router-dom";
 const GameImages = [
   {
     name: "snake",
-    img: `${import.meta.env.BASE_URL}/Snake.jpeg`,
+    img: "https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/Snake.jpeg",
+    //img: `${import.meta.env.BASE_URL}/Snake.jpeg`,
     url: "https://editor.p5js.org/Adsa2/full/SNx0iJ8tq",
   },
   {
     name: "aim-trainer",
-    img: `${import.meta.env.BASE_URL}/chess.png`,
+    img: "https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/chess.png",
+    //img: `${import.meta.env.BASE_URL}/chess.png`,
     url: "https://editor.p5js.org/Adsa2/full/lrpPC4nIt",
   },
   {
     name: "flappy-bird",
-    img: `${import.meta.env.BASE_URL}/flappy.png`,
+    img: "https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/flappy.png",
+    // img: `${import.meta.env.BASE_URL}/flappy.png`,
     url: "https://editor.p5js.org/Adsa2/full/7sfQIq1yp",
   },
   {
     name: "pong",
-    img: `${import.meta.env.BASE_URL}/pong.png`,
+    img: "https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/png.png",
+    // img: `${import.meta.env.BASE_URL}/pong.png`,
     url: "https://editor.p5js.org/Adsa2/full/WRYvYDXT-",
   },
 ];
@@ -27,12 +31,14 @@ const GameImages = [
 const DataImages = [
   {
     name: "tennis",
-    img: `${import.meta.env.BASE_URL}/tennis.jpg`,
+    img: "https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/tennis.jpg",
+    //img: `${import.meta.env.BASE_URL}/tennis.jpg`,
     link: "/Database/tennis",
   },
   {
     name: "aim-trainer",
-    img: `${import.meta.env.BASE_URL}/film.jpg`,
+    img: "https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/film.jpg",
+    //img: `${import.meta.env.BASE_URL}/film.jpg`,
     link: "/Database/film",
   },
 ];
@@ -44,7 +50,11 @@ function Home() {
         <h1>Home</h1>
         <img
           className="header-image"
-          src={`${import.meta.env.BASE_URL}//EDF_Energy_logo.svg.png`}
+          //src={`${import.meta.env.BASE_URL}//EDF_Energy_logo.svg.png`}
+          src={
+            "https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/EDF_Energy_logo.svg.png"
+          }
+          alt="edf logo"
         />
       </header>
       <h2>Games</h2>
@@ -55,7 +65,7 @@ function Home() {
             to={"/games"}
             state={{ name: image.name, url: image.url }}
           >
-            <img className="image" src={image.img} />
+            <img className="image" src={image.img} alt={image.name} />
           </Link>
         ))}
       </div>
