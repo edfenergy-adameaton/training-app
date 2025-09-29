@@ -1,0 +1,111 @@
+.iframe-crop-container {
+  height: 80vh;
+  overflow: hidden;
+  position: relative;
+  margin: 0 auto;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.crop-snake {
+  aspect-ratio: 1;
+}
+
+.crop-aim-trainer {
+  aspect-ratio: 1.5;
+}
+
+.crop-flappy-bird {
+  aspect-ratio: 1;
+}
+
+.crop-pong {
+  aspect-ratio: 1.26;
+}
+
+.iframe-cropped {
+  width: 100%;
+  border: none;
+  object-fit: cover;
+  pointer-events: auto;
+}
+
+.cropped-snake {
+  height: 99%;
+  transform: scale(1.0) translateY(-7%) translateX(4vw);
+}
+
+.cropped-aim-trainer {
+  height: 99%;
+  transform: scale(1.0) translateY(-7%) translateX(4vw);
+}
+
+.cropped-flappy-bird {
+  height: 99%;
+  transform: scale(1.0) translateY(-7%) translateX(4vw);
+}
+
+.cropped-pong {
+  height: 100%;
+  transform: scale(1.66) translateY(13%) translateX(20%);
+}
+
+
+.iframe-crop-container-pong {
+  height: 80vh;
+  aspect-ratio: 1.26;
+  overflow: hidden;
+  position: relative;
+  margin: 0 auto;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iframe-cropped-pong {
+  width: 100%;
+  height: 100%;
+  border: none;
+  transform: scale(1.66) translateY(13%) translateX(20%);
+  transition: transform 0.2s;
+  object-fit: cover;
+  pointer-events: auto;
+}
+
+
+.snake-page{
+  background-color: rgb(188, 188, 255);
+}
+.pong-page{
+  background-color: grey;
+}
+.flappy-bird-page{
+  background-color: black;
+  color: lightblue
+}
+.aim-trainer-page{
+  background-color: black;
+  color: lightblue
+}
+.game-page {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: hidden;
+}
+
+.button{
+  background-color: lightblue;
+}
+
+.button:hover {
+  transform: scale(1.05); 
+  cursor: pointer;
+}
