@@ -67,3 +67,9 @@ dist/
 **/config.json
 **/*secret*
 **/*password*
+
+# TypeScript build artifacts for Lambda
+**/terraform/dist/
+**/terraform/node_modules/
+**/terraform/lambda_function.zip
+**/terraform/package-lock.json
