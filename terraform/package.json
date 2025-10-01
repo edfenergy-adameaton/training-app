@@ -4,8 +4,11 @@
   "description": "TypeScript build setup for Lambda function",
   "scripts": {
     "build": "tsc && cp package.json dist/",
-    "clean": "rm -rf dist",
-    "rebuild": "npm run clean && npm run build"
+    "clean": "rm -rf dist && rm -f lambda_function.zip",
+    "test": "npm run build && node -e \"console.log('Build test passed')\"",
+    "zip": "cd dist && zip -r ../lambda_function.zip . -x \"*.ts\" \"tsconfig.json\"",
+    "package": "npm run clean && npm run build && npm run zip",
+    "validate": "if [ -f lambda_function.zip ]; then echo '✅ Package created: lambda_function.zip' && echo 'Contents:' && unzip -l lambda_function.zip; else echo '❌ Build failed: lambda_function.zip not found' && exit 1; fi"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.119",
