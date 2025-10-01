@@ -1,12 +1,6 @@
 import "./Games.css";
 
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Link,
-  useLocation,
-} from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 function Game() {
   const location = useLocation();
