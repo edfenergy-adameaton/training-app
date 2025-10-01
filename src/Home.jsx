@@ -4,26 +4,26 @@ import { Link } from "react-router-dom";
 const GameImages = [
   {
     name: "snake",
-    img: "https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/Snake.jpeg",
-    //img: `${import.meta.env.BASE_URL}/Snake.jpeg`,
+    //img: "https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/Snake.jpeg",
+    img: `${import.meta.env.BASE_URL}/Snake.jpeg`,
     url: "https://editor.p5js.org/Adsa2/full/SNx0iJ8tq",
   },
   {
     name: "aim-trainer",
-    img: "https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/chess.png",
-    //img: `${import.meta.env.BASE_URL}/chess.png`,
+    //img: "https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/chess.png",
+    img: `${import.meta.env.BASE_URL}/chess.png`,
     url: "https://editor.p5js.org/Adsa2/full/lrpPC4nIt",
   },
   {
     name: "flappy-bird",
-    img: "https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/flappy.png",
-    // img: `${import.meta.env.BASE_URL}/flappy.png`,
+    //img: "https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/flappy.png",
+    img: `${import.meta.env.BASE_URL}/flappy.png`,
     url: "https://editor.p5js.org/Adsa2/full/7sfQIq1yp",
   },
   {
     name: "pong",
-    img: "https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/pong.png",
-    // img: `${import.meta.env.BASE_URL}/pong.png`,
+    //img: "https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/pong.png",
+    img: `${import.meta.env.BASE_URL}/pong.png`,
     url: "https://editor.p5js.org/Adsa2/full/WRYvYDXT-",
   },
 ];
@@ -31,15 +31,21 @@ const GameImages = [
 const DataImages = [
   {
     name: "tennis",
-    img: "https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/tennis.jpg",
-    //img: `${import.meta.env.BASE_URL}/tennis.jpg`,
-    link: "/Database/tennis",
+    //img: "https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/tennis.jpg",
+    img: `${import.meta.env.BASE_URL}/tennis.jpg`,
+    link: "/database",
   },
   {
     name: "aim-trainer",
-    img: "https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/film.jpg",
-    //img: `${import.meta.env.BASE_URL}/film.jpg`,
-    link: "/Database/film",
+    //img: "https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/film.jpg",
+    img: `${import.meta.env.BASE_URL}/film.jpg`,
+    link: "/database",
+  },
+  {
+    name: "name-database",
+    //img: "https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/database.jpg",
+    img: `${import.meta.env.BASE_URL}/database.jpg`,
+    link: "/database",
   },
 ];
 
@@ -50,10 +56,7 @@ function Home() {
         <h1>Home</h1>
         <img
           className="header-image"
-          //src={`${import.meta.env.BASE_URL}//EDF_Energy_logo.svg.png`}
-          src={
-            "https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/EDF_Energy_logo.svg.png"
-          }
+          src={`${import.meta.env.BASE_URL}//EDF_Energy_logo.svg.png`} //src={"https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/EDF_Energy_logo.svg.png"
           alt="edf logo"
         />
       </header>
@@ -72,7 +75,9 @@ function Home() {
       <h2>Databases</h2>
       <div className="image-container">
         {DataImages.map((image) => (
-          <img className="image" src={image.img} />
+          <Link key={image.name} to={image.link}>
+            <img className="image" src={image.img} />
+          </Link>
         ))}
       </div>
     </div>
