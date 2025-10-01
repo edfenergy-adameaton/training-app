@@ -9,7 +9,7 @@ resource "aws_s3_object" "example_file" {
   for_each = var.files_to_upload
   key      = each.key
   source   = each.value
-  content_type = lookup({
+  content_type = lookup({ // maps files to their proper file type
     "jpg"  = "image/jpeg"
     "jpeg" = "image/jpeg"
     "png"  = "image/png"
@@ -18,84 +18,17 @@ resource "aws_s3_object" "example_file" {
   }, lower(split(".", each.key)[length(split(".", each.key)) - 1]), "application/octet-stream")
 }
 
-// SECURE: Block public access except for controlled access via policy
+//Block public access except for controlled access via policy
 resource "aws_s3_bucket_public_access_block" "example" {
   bucket = aws_s3_bucket.bucket1.id
 
-  block_public_acls       = true  // Block public ACLs
-  block_public_policy     = false // Allow our specific bucket policy
-  ignore_public_acls      = true  // Ignore any public ACLs
-  restrict_public_buckets = false // Allow our controlled public access
+  block_public_acls       = true // Block public ACLs
+  block_public_policy     = true // block any public policies
+  ignore_public_acls      = true // Ignore any public ACLs
+  restrict_public_buckets = true // block any public access in general
 }
 
 // create the policy
-resource "aws_s3_bucket_policy" "bucket_policy" {
-  bucket = aws_s3_bucket.bucket1.id
-  policy = data.aws_iam_policy_document.website_access.json
-}
-
-data "aws_iam_policy_document" "website_access" {
-  # SECURE: Allow image access ONLY from your specific website
-  // is this secure enough or will it still be flagged as public?
-  // could also use a lambda, or could use pre-signed urls?
-  statement {
-    sid = "RestrictedImageAccess"
-
-    effect = "Allow"
-
-    principals { // who this access is given to (in this case any principle of any type has access)
-      type        = "*"
-      identifiers = ["*"]
-    }
-
-    actions = [
-      "s3:GetObject"
-    ]
-
-    resources = [
-      "arn:aws:s3:::${var.bucket_name}/*.png",
-      "arn:aws:s3:::${var.bucket_name}/*.jpg",
-      "arn:aws:s3:::${var.bucket_name}/*.jpeg",
-      "arn:aws:s3:::${var.bucket_name}/*.gif",
-      "arn:aws:s3:::${var.bucket_name}/*.svg"
-    ]
-
-    # SECURITY: Only allow access when request comes from your website
-    condition {
-      test     = "StringLike"
-      variable = "aws:Referer"
-      values = [
-        "https://edfenergy-adameaton.github.io/training-app/*",
-        "https://edfenergy-adameaton.github.io/training-app"
-      ]
-    }
-  }
-
-  # EXPLICIT DENY: Block ALL access to database folder from public
-  statement {
-    sid = "DenyAllDatabaseAccess"
-
-    effect = "Deny"
-
-    principals {
-      type        = "*"
-      identifiers = ["*"]
-    }
-
-    actions = [
-      "s3:GetObject",
-      "s3:PutObject",
-      "s3:DeleteObject",
-      "s3:ListBucket"
-    ]
-
-    resources = [
-      "arn:aws:s3:::${var.bucket_name}/database",
-      "arn:aws:s3:::${var.bucket_name}/database/*"
-    ]
-  }
-}
-
 # Create an empty database file in S3
 # This JSON file will store our user data with the required columns
 resource "aws_s3_object" "users_database" {
@@ -117,16 +50,5 @@ resource "aws_s3_object" "users_database" {
 
   content_type = "application/json"
 }
-
-
-
-# Output the S3 bucket URL for use in your React app
-// but is this no longer usable since it should be private?
-output "s3_bucket_url" {
-  value       = "https://${aws_s3_bucket.bucket1.bucket}.s3.${aws_s3_bucket.bucket1.region}.amazonaws.com"
-  description = "Base URL for accessing S3 objects"
-}
-
-# Output the API Gateway URL for database operations
 
 
