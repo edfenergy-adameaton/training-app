@@ -24,4 +24,10 @@ variable "write_prefix" {
   default     = "database/"
 }
 
+variable "aws_region" {
+  description = "AWS region"
+  type        = string
+  default     = "eu-west-1"
+}
+
 
