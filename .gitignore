@@ -70,6 +70,8 @@ dist/
 
 # TypeScript build artifacts for Lambda
 **/terraform/dist/
+**/terraform/image_dist/
 **/terraform/node_modules/
 **/terraform/lambda_function.zip
+**/terraform/image_lambda.zip
 **/terraform/package-lock.json
