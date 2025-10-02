@@ -1,28 +1,30 @@
 import "./Home.css";
 import { Link } from "react-router-dom";
+import { useImageUrls, getImageUrl } from "./hooks/useImageUrls";
 
 const GameImages = [
   {
     name: "snake",
-    //img: "https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/Snake.jpeg",
+    // This will use local file since Snake.jpeg is not in S3
     img: `${import.meta.env.BASE_URL}/Snake.jpeg`,
     url: "https://editor.p5js.org/Adsa2/full/SNx0iJ8tq",
   },
   {
     name: "aim-trainer",
-    //img: "https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/chess.png",
-    img: `${import.meta.env.BASE_URL}/chess.png`,
+    // This will use pre-signed URL for chess.png from S3
+    s3Image: "chess.png",
+    img: `${import.meta.env.BASE_URL}/chess.png`, // fallback
     url: "https://editor.p5js.org/Adsa2/full/lrpPC4nIt",
   },
   {
     name: "flappy-bird",
-    //img: "https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/flappy.png",
+    // This will use local file since flappy.png is not in S3
     img: `${import.meta.env.BASE_URL}/flappy.png`,
     url: "https://editor.p5js.org/Adsa2/full/7sfQIq1yp",
   },
   {
     name: "pong",
-    //img: "https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/pong.png",
+    // This will use local file since pong.png is not in S3
     img: `${import.meta.env.BASE_URL}/pong.png`,
     url: "https://editor.p5js.org/Adsa2/full/WRYvYDXT-",
   },
@@ -31,54 +33,86 @@ const GameImages = [
 const DataImages = [
   {
     name: "tennis",
-    //img: "https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/tennis.jpg",
     img: `${import.meta.env.BASE_URL}/tennis.jpg`,
-    link: "/database",
+    link: "/search-tennis",
   },
   {
-    name: "aim-trainer",
-    //img: "https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/film.jpg",
+    name: "film",
     img: `${import.meta.env.BASE_URL}/film.jpg`,
-    link: "/database",
+    link: "/search-film",
   },
   {
-    name: "name-database",
-    //img: "https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/database.jpg",
-    img: `${import.meta.env.BASE_URL}/database.jpg`,
+    name: "database",
+    // This will use pre-signed URL if frog.png exists in S3
+    s3Image: "frog.png",
+    img: `${import.meta.env.BASE_URL}/database.jpg`, // fallback
     link: "/database",
   },
 ];
 
 function Home() {
+  const { imageUrls, loading, error } = useImageUrls();
+
+  // Show loading state while fetching pre-signed URLs
+  if (loading) {
+    return (
+      <div className="home-container">
+        <div className="loading-container">
+          <h2>Loading images...</h2>
+          <div className="spinner"></div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show error state if pre-signed URLs failed to load
+  if (error) {
+    console.warn('Failed to load S3 images, using fallback URLs:', error);
+  }
+
   return (
     <div className="home-container">
       <header className="home-header">
         <h1>Home</h1>
         <img
           className="header-image"
-          src={`${import.meta.env.BASE_URL}//EDF_Energy_logo.svg.png`} //src={"https://adam-app-bucket2909.s3.eu-west-1.amazonaws.com/EDF_Energy_logo.svg.png"
+          src={`${import.meta.env.BASE_URL}//EDF_Energy_logo.svg.png`}
           alt="edf logo"
         />
       </header>
       <h2>Games</h2>
       <div className="image-container">
-        {GameImages.map((image) => (
-          <Link
-            key={image.name}
-            to={"/games"}
-            state={{ name: image.name, url: image.url }}
-          >
-            <img className="image" src={image.img} alt={image.name} />
-          </Link>
-        ))}
+        {GameImages.map((image) => {
+          // Get the appropriate image URL (pre-signed or fallback)
+          const imageUrl = image.s3Image 
+            ? getImageUrl(imageUrls, image.s3Image, image.img)
+            : image.img;
+
+          return (
+            <Link
+              key={image.name}
+              to={"/games"}
+              state={{ name: image.name, url: image.url }}
+            >
+              <img className="image" src={imageUrl} alt={image.name} />
+            </Link>
+          );
+        })}
       </div>
       <h2>Databases</h2>
       <div className="image-container">
-        {DataImages.map((image) => (
-          <Link key={image.name} to={image.link}>
-            <img className="image" src={image.img} />
-          </Link>
-        ))}
+        {DataImages.map((image) => {
+          // Get the appropriate image URL (pre-signed or fallback)
+          const imageUrl = image.s3Image 
+            ? getImageUrl(imageUrls, image.s3Image, image.img)
+            : image.img;
+
+          return (
+            <Link key={image.name} to={image.link}>
+              <img className="image" src={imageUrl} alt={image.name} />
+            </Link>
+          );
+        })}
       </div>
     </div>
   );
